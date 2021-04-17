@@ -7,6 +7,17 @@
 #define MAX_LEN 100
 
 
+/**
+ * \brief Limpia el buffer de entrada estándar (stdin)
+ *
+ * \param void
+ *
+ * \return void
+ *
+ */
+static void clearStdin(void);
+
+
 /** \brief Lee de stdin una cadena hasta que encuentra un '\n' o hasta que haya copiado
  *         un máximo de "longitud - 1" caracteres
  *
@@ -61,6 +72,11 @@ static int esFlotante(char* cadena, int limite);
 static int getFloat(float* pResultado);
 
 
+static void clearStdin(void)
+{
+	scanf("%*[\n]");
+}
+
 static int getString(char* cadena, int longitud)
 {
     int retorno = -1;
@@ -69,7 +85,7 @@ static int getString(char* cadena, int longitud)
 
     if(cadena != NULL && longitud > 0)
     {
-    	fflush(stdin);
+    	clearStdin();
 
         if(fgets(bufferString, MAX_LEN, stdin) != NULL)
         {
