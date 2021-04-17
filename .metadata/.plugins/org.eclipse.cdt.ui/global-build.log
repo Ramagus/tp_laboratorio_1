@@ -1,0 +1,37 @@
+22:25:58 **** Rebuild of configuration Debug for project TrabajoPractico2 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Input.o" "..\\src\\Input.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\ArrayEmployees.o" "..\\src\\ArrayEmployees.c" 
+gcc -o TrabajoPractico2.exe "src\\ArrayEmployees.o" "src\\Input.o" "src\\main.o" 
+13:28:01 **** Rebuild of configuration Debug for project TrabajoPractico1 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Input.o" "..\\src\\Input.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Calculadora.o" "..\\src\\Calculadora.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Menu.o" "..\\src\\Menu.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" 
+gcc -o TrabajoPractico1.exe "src\\Calculadora.o" "src\\Input.o" "src\\Menu.o" "src\\main.o" 
+13:29:30 **** Incremental Build of configuration Debug for project TrabajoPractico1 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" 
+gcc -o TrabajoPractico1.exe "src\\Calculadora.o" "src\\Input.o" "src\\Menu.o" "src\\main.o" 
+13:35:21 **** Incremental Build of configuration Debug for project TrabajoPractico1 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" 
+gcc -o TrabajoPractico1.exe "src\\Calculadora.o" "src\\Input.o" "src\\Menu.o" "src\\main.o" 
+13:45:25 **** Incremental Build of configuration Debug for project TrabajoPractico1 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" 
+..\src\main.c: In function 'clearScreen':
+..\src\main.c:9:9: error: \u001b is not a valid universal character
+    9 |  printf("\u001b[2J");
+      |         ^~~~~~~~~~~
+13:47:13 **** Incremental Build of configuration Debug for project TrabajoPractico1 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" 
+gcc -o TrabajoPractico1.exe "src\\Calculadora.o" "src\\Input.o" "src\\Menu.o" "src\\main.o" 
+13:49:01 **** Incremental Build of configuration Debug for project TrabajoPractico1 ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\main.o" "..\\src\\main.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Input.o" "..\\src\\Input.c" 
+gcc -o TrabajoPractico1.exe "src\\Calculadora.o" "src\\Input.o" "src\\Menu.o" "src\\main.o" 

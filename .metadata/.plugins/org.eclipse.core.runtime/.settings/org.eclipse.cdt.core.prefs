@@ -1,0 +1,14 @@
+build.all.configs.enabled=false
+build.proj.ref.configs.enabled=false
+doctool/workspace.default=org.eclipse.cdt.ui.doxygen
+doxygen/doxygen_new_line_after_brief=true
+doxygen/doxygen_use_brief_tag=true
+doxygen/doxygen_use_javadoc_tags=false
+doxygen/doxygen_use_pre_tag=false
+doxygen/doxygen_use_structural_commands=false
+eclipse.preferences.version=1
+environment/workspace/PATH/delimiter=;
+environment/workspace/PATH/operation=replace
+environment/workspace/PATH/value=C\:/Program Files/Java/jre1.8.0_241/bin/server;C\:/Program Files/Java/jre1.8.0_241/bin;C\:/Program Files/Java/jre1.8.0_241/lib/amd64;C\:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C\:\\WINDOWS\\system32;C\:\\WINDOWS;C\:\\WINDOWS\\System32\\Wbem;C\:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C\:\\WINDOWS\\System32\\OpenSSH\\;C\:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C\:\\MinGW\\bin;C\:\\Program Files\\dotnet\\;C\:\\Program Files\\Git\\cmd;;C\:\\Users\\Silvia\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C\:\\Users\\Silvia\\AppData\\Local\\Microsoft\\WindowsApps;C\:\\Users\\Silvia\\eclipse\\cpp-2020-03\\eclipse;
+environment/workspace/append=true
+environment/workspace/appendContributed=true
