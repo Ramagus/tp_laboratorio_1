@@ -452,7 +452,7 @@ int printAnEmployee(Employee* anEmployee)
 
     if(anEmployee != NULL)
     {
-        printf("%d\t%-8s\t%-8s\t%-8.2f\t%-d\n", (*anEmployee).id, (*anEmployee).name, (*anEmployee).lastName, (*anEmployee).salary, (*anEmployee).sector);
+        printf("%d\t%-8s\t%-8s\t%-8.2f\t%-d\n", anEmployee->id, anEmployee->name, anEmployee->lastName, anEmployee->salary, anEmployee->sector);
 
         auxReturn = 0;
     }
