@@ -60,7 +60,7 @@ int esEntero(float numero)
     return ret;
 }
 
-int realizarOperaciones(float* numero1, float* numero2, float* resultSuma, float* resultResta,
+int realizarOperaciones(float numero1, float numero2, float* resultSuma, float* resultResta,
 						float* resultDivision, float* resultMultiplicacion, unsigned long int* resultFact1,
 						unsigned long int* resultFact2, int* flagDiv, int* flagFact1, int* flagFact2)
 {
@@ -69,60 +69,58 @@ int realizarOperaciones(float* numero1, float* numero2, float* resultSuma, float
     int numFact1;
     int numFact2;
 
-    if(numero1 != NULL && numero2 != NULL && resultSuma != NULL && resultResta != NULL &&
-       resultDivision != NULL && resultMultiplicacion != NULL && resultFact1 != NULL &&
-	   resultFact2 != NULL && flagDiv != NULL && flagFact1 != NULL && flagFact2 != NULL)
+    if(resultSuma != NULL && resultResta != NULL && resultDivision != NULL && resultMultiplicacion != NULL &&
+	   resultFact1 != NULL && resultFact2 != NULL && flagDiv != NULL && flagFact1 != NULL && flagFact2 != NULL)
     {
-        printf("\nSe realizaran las siguientes operaciones:\n\n");
+		printf("\nSe realizaran las siguientes operaciones:\n\n");
 
-        printf("a) Suma (A + B)\n");
-        printf("b) Resta (A - B)\n");
-        printf("c) Division (A / B)\n");
-        printf("d) Multiplicacion (A * B)\n");
-        printf("e) Factorial (A!)\n");
-        printf("f) Factorial (B!)\n");
+		printf("a) Suma (A + B)\n");
+		printf("b) Resta (A - B)\n");
+		printf("c) Division (A / B)\n");
+		printf("d) Multiplicacion (A * B)\n");
+		printf("e) Factorial (A!)\n");
+		printf("f) Factorial (B!)\n");
 
-        sumar(*numero1, *numero2, resultSuma);
-        restar(*numero1, *numero2, resultResta);
-
-        if(!dividir(*numero1, *numero2, resultDivision))
-        {
-        	*flagDiv = 1;
-        }
-
-		multiplicar(*numero1, *numero2, resultMultiplicacion);
-
-		if(esEntero(*numero1))
+		if(!sumar(numero1, numero2, resultSuma) && !restar(numero1, numero2, resultResta) &&
+		   !multiplicar(numero1, numero2, resultMultiplicacion))
 		{
-			numFact1 = (int) *numero1;
-
-			if(!factorial(numFact1, resultFact1))
+			if(!dividir(numero1, numero2, resultDivision))
 			{
-				*flagFact1 = 1;
+				*flagDiv = 1;
 			}
-		}
 
-		else
-		{
-			*flagFact1 = -1;
-		}
-
-		if(esEntero(*numero2))
-		{
-			numFact2 = (int) *numero2;
-
-			if(!factorial(numFact2, resultFact2))
+			if(esEntero(numero1))
 			{
-				*flagFact2 = 1;
+				numFact1 = (int) numero1;
+
+				if(!factorial(numFact1, resultFact1))
+				{
+					*flagFact1 = 1;
+				}
 			}
-		}
 
-		else
-		{
-			*flagFact2 = -1;
-		}
+			else
+			{
+				*flagFact1 = -1;
+			}
 
-		ret = 0;
+			if(esEntero(numero2))
+			{
+				numFact2 = (int) numero2;
+
+				if(!factorial(numFact2, resultFact2))
+				{
+					*flagFact2 = 1;
+				}
+			}
+
+			else
+			{
+				*flagFact2 = -1;
+			}
+
+			ret = 0;
+		}
     }
 
     return ret;

@@ -28,8 +28,8 @@ int esEntero(float numero);
 
 /** \brief Calcula las operaciones aritméticas
  *
- * \param numero1 float* Es el primer número
- * \param numero2 float* Es el segundo número
+ * \param numero1 float Es el primer número
+ * \param numero2 float Es el segundo número
  * \param resultSuma float* Lugar donde se guardará el resultado de la suma
  * \param resultResta float* Lugar donde se guardará el resultado de la resta
  * \param resultDivision float* Lugar donde se guardará el resultado de la división
@@ -43,7 +43,7 @@ int esEntero(float numero);
  * \return int 0 si está todo Ok o -1 si hubo un error
  *
  */
-int realizarOperaciones(float* numero1, float* numero2, float* resultSuma, float* resultResta,
+int realizarOperaciones(float numero1, float numero2, float* resultSuma, float* resultResta,
 						float* resultDivision, float* resultMultiplicacion, unsigned long int* resultFact1,
 						unsigned long int* resultFact2, int* flagDiv, int* flagFact1, int* flagFact2);
 

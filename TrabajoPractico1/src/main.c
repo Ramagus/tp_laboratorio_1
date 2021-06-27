@@ -34,14 +34,14 @@ int main()
 
                     if(utn_getNumeroFlotante(&numero_A, "\nIngrese el primer numero: ", "Error. Ingrese un numero flotante valido: ") == 0)
                     {
-                        printf("\nPrimer numero cargado\n\n");
+                        printf("\nPrimer numero cargado\n");
 
                         flag_A = 1;
                     }
 
                     else
                     {
-                        printf("\nNo se pudo cargar el primer numero\n\n");
+                        printf("\nNo se pudo cargar el primer numero\n");
                     }
 
                     break;
@@ -50,19 +50,19 @@ int main()
 
                     if(flag_A == 0)
                     {
-                        printf("\nError. Debe ingresar el primer numero\n\n");
+                        printf("\nError. Debe ingresar el primer numero\n");
                     }
 
                     else if(utn_getNumeroFlotante(&numero_B, "\nIngrese el segundo numero: ", "Error. Ingrese un numero flotante valido: ") == 0)
 					{
-						printf("\nSegundo numero cargado\n\n");
+						printf("\nSegundo numero cargado\n");
 
 						flag_B = 1;
 					}
 
 					else
 					{
-						printf("\nNo se pudo cargar el segundo numero\n\n");
+						printf("\nNo se pudo cargar el segundo numero\n");
 					}
 
                     break;
@@ -71,26 +71,26 @@ int main()
 
                     if(flag_A == 0 && flag_B == 0)
                     {
-                        printf("\nError. No hay ningun numero cargado\n\n");
+                        printf("\nError. No hay ningun numero cargado\n");
                     }
 
                     else if(flag_A == 1 && flag_B == 0)
                     {
-                        printf("\nError. El segundo numero no esta cargado\n\n");
+                        printf("\nError. El segundo numero no esta cargado\n");
                     }
 
-                    else if(realizarOperaciones(&numero_A, &numero_B, &resultadoSuma, &resultadoResta,
-										   &resultadoDivision, &resultadoMultiplicacion, &resultadoFactorial_A,
-										   &resultadoFactorial_B, &flagDivision, &flagFactorial_A, &flagFactorial_B) == 0)
+                    else if(realizarOperaciones(numero_A, numero_B, &resultadoSuma, &resultadoResta,
+										        &resultadoDivision, &resultadoMultiplicacion, &resultadoFactorial_A,
+										        &resultadoFactorial_B, &flagDivision, &flagFactorial_A, &flagFactorial_B) == 0)
 					{
-						printf("\nCalculos realizados correctamente\n\n");
+						printf("\nCalculos realizados correctamente\n");
 
 						flagCalculos = 1;
 					}
 
 					else
 					{
-						printf("\nNo se pudieron calcular las operaciones\n\n");
+						printf("\nNo se pudieron calcular las operaciones\n");
 					}
 
                     break;
@@ -99,17 +99,17 @@ int main()
 
                     if(flag_A == 0 && flag_B == 0)
                     {
-                        printf("\nError. No hay ningun numero cargado\n\n");
+                        printf("\nError. No hay ningun numero cargado\n");
                     }
 
                     else if(flag_A == 1 && flag_B == 0)
                     {
-                        printf("\nError. El segundo numero no esta cargado\n\n");
+                        printf("\nError. El segundo numero no esta cargado\n");
                     }
 
                     else if(flagCalculos == 0)
                     {
-                        printf("\nError. No se han realizado los calculos aun\n\n");
+                        printf("\nError. No se han realizado los calculos aun\n");
                     }
 
                     else
@@ -119,23 +119,26 @@ int main()
 
                         flag_A = 0;
                         flag_B = 0;
-
                         flagCalculos = 0;
+                        flagDivision = 0;
+						flagFactorial_A = 0;
+						flagFactorial_B = 0;
                     }
 
                     break;
 
                 case 5:
 
-                    printf("\nUsted ha salido de la calculadora\n\n");
+                    printf("\nUsted ha salido de la calculadora\n");
 
                     break;
 
                 default:
 
-                    printf("\nError. Elija una opcion correcta\n\n");
+                    printf("\nError. Elija una opcion correcta\n");
             }
 
+            printf("\n");
             system("pause");
             system("cls");
         }
