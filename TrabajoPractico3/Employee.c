@@ -821,7 +821,7 @@ int showSortMenu(LinkedList* pArrayListEmployee)
             system("pause");
             system("cls");
 
-            printf("\tMENU DE ORDENAMIENTO\n");
+            printf("\t\tMENU DE ORDENAMIENTO\n");
             printf("\n1. Ordenar por ID");
             printf("\n2. Ordenar por nombre");
             printf("\n3. Ordenar por horas trabajadas");
@@ -869,7 +869,11 @@ int showSortMenu(LinkedList* pArrayListEmployee)
 
         do
         {
-			printf("\n\n\t\tSENTIDO DE ORDENAMIENTO\n\n");
+			printf("\n");
+			system("pause");
+			system("cls");
+
+			printf("\t\tSENTIDO DE ORDENAMIENTO\n\n");
 			printf("A. Orden Descendente\n");
 			printf("B. Orden Ascendente\n");
 

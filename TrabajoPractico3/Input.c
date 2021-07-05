@@ -108,24 +108,6 @@ static void clearStdin(void)
 	scanf("%*[\n]");
 }
 
-int str_n_len(char* str, int limit)
-{
-    int auxReturn = -1;
-    int length;
-
-    if(str != NULL && limit > 0)
-    {
-        length = strlen(str);
-
-        if(length < limit)
-        {
-            auxReturn = length;
-        }
-    }
-
-    return auxReturn;
-}
-
 int utn_formatearCadena(char* cadena, int limite)
 {
     int retorno = -1;
@@ -161,7 +143,7 @@ static int getString(char* cadena, int longitud)
 
         if(fgets(bufferString, MAX_LEN, stdin) != NULL)
         {
-            len = str_n_len(bufferString, MAX_LEN);
+            len = strnlen(bufferString, MAX_LEN);
 
             if(len < longitud)
             {

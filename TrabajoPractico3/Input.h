@@ -2,17 +2,6 @@
 #define INPUT_H_
 
 
-/** \brief Cuenta la cantidad de caracteres de una cadena
- *
- * \param str char* Cadena de caracteres a ser analizada
- * \param limit int Cantidad máxima de caracteres
- *
- * \return int Retorna la cantidad de caracteres de la cadena o -1 si hubo un error
- *
- */
-int str_n_len(char* str, int limit);
-
-
 /** \brief Formaliza el nombre o apellido recibido
  *
  * \param cadena char* Nombre o apellido a ser formalizado
