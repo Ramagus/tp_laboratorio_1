@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Menu.h"
+#include "Calculadora.h"
 #include "Input.h"
+#include "Menu.h"
 
 #define KM 7090
 #define PRECIO_AERO 162965
 #define PRECIO_LATAM 159339
 
-int mostrarMenuOpciones(float kilometros, float precioAero, float precioLatam, int flagKm, int flagAero, int flagLatam, int* opcion)
+int mostrarMenuOpciones(double kilometros, double precioAero, double precioLatam, int flagKm, int flagAero, int flagLatam, int* opcion)
 {
     int ret = -1;
 
@@ -23,7 +24,7 @@ int mostrarMenuOpciones(float kilometros, float precioAero, float precioLatam, i
 
         else
         {
-            printf("%.2f)", kilometros);
+            printf("%.2lf)", kilometros);
         }
 
         printf("\n2. Ingresar Precio de Vuelos (Aerolineas = ");
@@ -35,7 +36,7 @@ int mostrarMenuOpciones(float kilometros, float precioAero, float precioLatam, i
 
         else
         {
-            printf("%.2f", precioAero);
+            printf("%.2lf", precioAero);
         }
 
         printf(", Latam = ");
@@ -47,7 +48,7 @@ int mostrarMenuOpciones(float kilometros, float precioAero, float precioLatam, i
 
         else
         {
-        	printf("%.2f)", precioLatam);
+        	printf("%.2lf)", precioLatam);
         }
 
         printf("\n3. Calcular todos los costos");
@@ -64,45 +65,38 @@ int mostrarMenuOpciones(float kilometros, float precioAero, float precioLatam, i
     return ret;
 }
 
-int calcularCostosVuelo(float kilometros, float precio, float* tarDeb, float* tarCred, double* bitcoin, float* unitario)
+int calcularCostosVuelo(double kilometros, double precio, double* tarDeb, double* tarCred, double* bitcoin, double* unitario)
 {
 	int ret = -1;
-	float desc;
-	float interes;
+	double valorPorcentaje;
+	double desc;
+	double interes;
 
-	if(kilometros > 0 && precio > 0 && tarDeb != NULL && tarCred != NULL && bitcoin != NULL && unitario != NULL)
+	if(kilometros > 0 && precio > 0 && tarDeb != NULL && tarCred != NULL && bitcoin != NULL && unitario != NULL &&
+	   !dividir(10, 100, &valorPorcentaje) && !multiplicar(precio, valorPorcentaje, &desc) && !restar(precio, desc, tarDeb) &&
+	   !dividir(25, 100, &valorPorcentaje) && !multiplicar(precio, valorPorcentaje, &interes) && !sumar(precio, interes, tarCred) &&
+	   !dividir(precio, 4606954.55, bitcoin) && !dividir(precio, kilometros, unitario))
 	{
-		desc = precio * 10 / 100;
-		*tarDeb = precio - desc;
-
-		interes = precio * 25 / 100;
-		*tarCred = precio + interes;
-
-		*bitcoin = precio / 4606954.55;
-
-		*unitario = precio / kilometros;
-
 		ret = 0;
 	}
 
 	return ret;
 }
 
-int calcularCostosTodos(float kilometros, float precioAero, float* tarDebAero, float* tarCredAero, double* bitcoinAero, float* unitarioAero,
-                        float precioLatam, float* tarDebLatam, float* tarCredLatam, double* bitcoinLatam, float* unitarioLatam, float* difPrecios)
+int calcularCostosTodos(double kilometros, double precioAero, double* tarDebAero, double* tarCredAero, double* bitcoinAero, double* unitarioAero,
+                        double precioLatam, double* tarDebLatam, double* tarCredLatam, double* bitcoinLatam, double* unitarioLatam, double* difPrecios)
 {
 	int ret = -1;
 
 	if(kilometros > 0 && precioAero > 0 && tarDebAero != NULL && tarCredAero != NULL && bitcoinAero != NULL && unitarioAero != NULL &&
 	   precioLatam > 0 && tarDebLatam != NULL && tarCredLatam != NULL && bitcoinLatam != NULL && unitarioLatam != NULL && difPrecios != NULL &&
 	   !calcularCostosVuelo(kilometros, precioAero, tarDebAero, tarCredAero, bitcoinAero, unitarioAero) &&
-	   !calcularCostosVuelo(kilometros, precioLatam, tarDebLatam, tarCredLatam, bitcoinLatam, unitarioLatam))
+	   !calcularCostosVuelo(kilometros, precioLatam, tarDebLatam, tarCredLatam, bitcoinLatam, unitarioLatam) &&
+	   !restar(precioLatam, precioAero, difPrecios))
 	{
-		*difPrecios = precioLatam - precioAero;
-
 		if(*difPrecios < 0)
 		{
-			(*difPrecios) *= -1;
+			multiplicar(*difPrecios, -1, difPrecios);
 		}
 
 		ret = 0;
@@ -111,18 +105,18 @@ int calcularCostosTodos(float kilometros, float precioAero, float* tarDebAero, f
 	return ret;
 }
 
-int mostrarCalculosVuelo(char* nombre, float precio, float tarDeb, float tarCred, double bitcoin, float unitario)
+int mostrarCalculosVuelo(char* nombre, double precio, double tarDeb, double tarCred, double bitcoin, double unitario)
 {
 	int ret = -1;
 
 	if(nombre != NULL && precio > 0 && tarDeb > 0 && tarCred > 0 && bitcoin > 0 && unitario > 0)
 	{
-		printf("\nPrecio %s: $%.2f\n", nombre, precio);
+		printf("\nPrecio %s: $%.2lf\n", nombre, precio);
 
-		printf("a) Precio con tarjeta de debito: $%.2f\n", tarDeb);
-		printf("b) Precio con tarjeta de credito: $%.2f\n", tarCred);
+		printf("a) Precio con tarjeta de debito: $%.2lf\n", tarDeb);
+		printf("b) Precio con tarjeta de credito: $%.2lf\n", tarCred);
 		printf("c) Precio pagando con Bitcoin: %.8lf BTC\n", bitcoin);
-		printf("d) Mostrar precio unitario: $%.2f\n", unitario);
+		printf("d) Mostrar precio unitario: $%.2lf\n", unitario);
 
 		ret = 0;
 	}
@@ -130,8 +124,8 @@ int mostrarCalculosVuelo(char* nombre, float precio, float tarDeb, float tarCred
 	return ret;
 }
 
-int informarResultados(float kilometros, float precioAero, float tarDebAero, float tarCredAero, double bitcoinAero, float unitarioAero,
-		               float precioLatam, float tarDebLatam, float tarCredLatam, double bitcoinLatam, float unitarioLatam, float difPrecios)
+int informarResultados(double kilometros, double precioAero, double tarDebAero, double tarCredAero, double bitcoinAero, double unitarioAero,
+		               double precioLatam, double tarDebLatam, double tarCredLatam, double bitcoinLatam, double unitarioLatam, double difPrecios)
 {
 	int ret = -1;
 
@@ -143,12 +137,12 @@ int informarResultados(float kilometros, float precioAero, float tarDebAero, flo
 		system("cls");
 
 		printf("\tRESULTADOS\n\n");
-		printf("KMs ingresados: %.2f\n", kilometros);
+		printf("KMs ingresados: %.2lf\n", kilometros);
 
 		if(!mostrarCalculosVuelo("Aerolineas", precioAero, tarDebAero, tarCredAero, bitcoinAero, unitarioAero) &&
 		   !mostrarCalculosVuelo("Latam", precioLatam, tarDebLatam, tarCredLatam, bitcoinLatam, unitarioLatam))
 		{
-			printf("\nLa diferencia de precio es: $%.2f\n", difPrecios);
+			printf("\nLa diferencia de precio es: $%.2lf\n", difPrecios);
 
 			ret = 0;
 		}
@@ -161,15 +155,15 @@ int hardcodearVuelos(void)
 {
 	int ret = -1;
 
-	float tarDebAero;
-	float tarCredAero;
+	double tarDebAero;
+	double tarCredAero;
 	double bitcoinAero;
-	float unitarioAero;
-	float tarDebLatam;
-	float tarCredLatam;
+	double unitarioAero;
+	double tarDebLatam;
+	double tarCredLatam;
 	double bitcoinLatam;
-	float unitarioLatam;
-	float difPrecios;
+	double unitarioLatam;
+	double difPrecios;
 
 	if(!calcularCostosTodos(KM, PRECIO_AERO, &tarDebAero, &tarCredAero, &bitcoinAero, &unitarioAero,
 			                PRECIO_LATAM, &tarDebLatam, &tarCredLatam, &bitcoinLatam, &unitarioLatam, &difPrecios) &&

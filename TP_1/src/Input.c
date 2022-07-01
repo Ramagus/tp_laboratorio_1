@@ -63,14 +63,14 @@ static int getInt(int* pResultado);
 static int esFlotante(char* cadena, int limite);
 
 
-/** \brief Obtiene un número flotante
+/** \brief Obtiene un número double
  *
- * \param pResultado float* Puntero al espacio de memoria donde se dejará el resultado de la función
+ * \param pResultado double* Puntero al espacio de memoria donde se dejará el resultado de la función
  *
  * \return int Retorna 0 (EXITO) si se obtiene un número flotante y -1 (ERROR) si no
  *
  */
-static int getFloat(float* pResultado);
+static int getDouble(double* pResultado);
 
 
 /** \brief Obtiene un caracter
@@ -228,7 +228,7 @@ static int esFlotante(char* cadena, int limite)
     return retorno;
 }
 
-static int getFloat(float* pResultado)
+static int getDouble(double* pResultado)
 {
     int retorno = -1;
     char bufferString[MAX_LEN];
@@ -242,10 +242,10 @@ static int getFloat(float* pResultado)
     return retorno;
 }
 
-int utn_getNumeroFlotante(float* pResultado, char* mensaje, char* mensajeError, float minimo, float maximo, int reintentos)
+int utn_getNumeroDouble(double* pResultado, char* mensaje, char* mensajeError, double minimo, double maximo, int reintentos)
 {
     int retorno = -1;
-    float bufferFloat;
+    double bufferDouble;
     int flagError = 0;
 
     if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >= 0)
@@ -264,9 +264,9 @@ int utn_getNumeroFlotante(float* pResultado, char* mensaje, char* mensajeError, 
                 printf("%s", mensajeError);
             }
 
-            if((!getFloat(&bufferFloat)) && (bufferFloat >= minimo && bufferFloat <= maximo))
+            if((!getDouble(&bufferDouble)) && (bufferDouble >= minimo && bufferDouble <= maximo))
             {
-                *pResultado = bufferFloat;
+                *pResultado = bufferDouble;
                 retorno = 0;
                 break;
             }
@@ -301,13 +301,13 @@ static int getChar(char* pResultado)
     return retorno;
 }
 
-int verificarRespuesta(char* pResp, char* mensaje, char* mensajeError)
+int utn_respuestaEsAfirmativa(char* mensaje, char* mensajeError)
 {
-    char dato;
     int retorno = -1;
     int flagError = 0;
+    char dato = '\0';
 
-    if(pResp != NULL && mensaje != NULL && mensajeError != NULL)
+    if(mensaje != NULL && mensajeError != NULL)
     {
         do
         {
@@ -323,23 +323,34 @@ int verificarRespuesta(char* pResp, char* mensaje, char* mensajeError)
                 printf("%s", mensajeError);
             }
 
-            if(!getChar(&dato) && islower(dato))
+            if(!getChar(&dato))
             {
-            	dato = toupper(dato);
+            	if(islower(dato))
+            	{
+            		dato = toupper(dato);
+            	}
+            }
+
+            else
+            {
+            	break;
             }
 
         } while(dato != 'S' && dato != 'N');
 
-        *pResp = dato;
-
-        if(dato == 'S')
+        switch(dato)
         {
-            retorno = 1;
-        }
+        	case 'S':
 
-        else
-        {
-            retorno = 0;
+				retorno = 1;
+
+				break;
+
+			case 'N':
+
+				retorno = 0;
+
+				break;
         }
     }
 

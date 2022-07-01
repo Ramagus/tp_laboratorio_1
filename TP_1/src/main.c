@@ -7,24 +7,24 @@ int main(void)
 {
 	setbuf(stdout, NULL);
 
-	float kilometros;
-	float precioAero;
-	float precioLatam;
-	float tarDebAero;
-	float tarCredAero;
+	double kilometros;
+	double precioAero;
+	double precioLatam;
+	double tarDebAero;
+	double tarCredAero;
 	double bitcoinAero;
-	float unitarioAero;
-	float tarDebLatam;
-	float tarCredLatam;
+	double unitarioAero;
+	double tarDebLatam;
+	double tarCredLatam;
 	double bitcoinLatam;
-	float unitarioLatam;
-	float difPrecios;
+	double unitarioLatam;
+	double difPrecios;
 	int flagKm = 0;
 	int flagAero = 0;
 	int flagLatam = 0;
 	int flagCostos = 0;
+	int flagExit = 0;
 	int opcion;
-	char respuesta;
 
 	do
 	{
@@ -34,7 +34,7 @@ int main(void)
 			{
 				case 1:
 
-					if(!utn_getNumeroFlotante(&kilometros, "\nIngrese kilometros entre 1 y 1000000: ", "Error. Solo numeros enteros dentro del rango: ", 1, 1000000, 2))
+					if(!utn_getNumeroDouble(&kilometros, "\nIngrese kilometros entre 1 y 1000000: ", "Error. Solo numeros enteros dentro del rango: ", 1, 1000000, 2))
 					{
 						printf("\nKilometros cargados\n");
 
@@ -52,7 +52,7 @@ int main(void)
 
 					if(flagKm)
 					{
-						if(!utn_getNumeroFlotante(&precioAero, "\nIngrese precio de vuelo de Aerolineas entre 1 y 1000000: ", "Error. Solo numeros enteros dentro del rango: ", 1, 1000000, 2))
+						if(!utn_getNumeroDouble(&precioAero, "\nIngrese precio de vuelo de Aerolineas entre 1 y 1000000: ", "Error. Solo numeros enteros dentro del rango: ", 1, 1000000, 2))
 						{
 							printf("\nPrecio de Aerolineas cargado\n");
 
@@ -66,7 +66,7 @@ int main(void)
 
 						if(flagAero)
 						{
-							if(!utn_getNumeroFlotante(&precioLatam, "\nIngrese precio de vuelo de Latam entre 1 y 1000000: ", "Error. Solo numeros enteros dentro del rango: ", 1, 1000000, 2))
+							if(!utn_getNumeroDouble(&precioLatam, "\nIngrese precio de vuelo de Latam entre 1 y 1000000: ", "Error. Solo numeros enteros dentro del rango: ", 1, 1000000, 2))
 							{
 								printf("\nPrecio de Latam cargado\n");
 
@@ -177,9 +177,11 @@ int main(void)
 
 				case 6:
 
-					if(verificarRespuesta(&respuesta, "\nEsta seguro que desea salir del menu? (S/N): ", "Error. Solo S o N: ") == 1)
+					if(utn_respuestaEsAfirmativa("\nEsta seguro que desea salir del menu? (S/N): ", "Error. Solo S o N: ") == 1)
 					{
 						printf("\nUsted ha salido del menu\n");
+
+						flagExit = 1;
 					}
 
 					break;
@@ -196,7 +198,7 @@ int main(void)
 			break;
 		}
 
-	} while(opcion != 6 || respuesta == 'N');
+	} while(opcion != 6 || !flagExit);
 
 	return EXIT_SUCCESS;
 }
