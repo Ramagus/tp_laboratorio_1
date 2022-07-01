@@ -32,7 +32,7 @@ int getEmptyIndex(Passenger* list, int len)
     {
         for(i = 0; i < len; i++)
         {
-            if(list[i].isEmpty == TRUE)
+            if(list[i].isEmpty)
             {
                 index = i;
                 break;
@@ -54,7 +54,7 @@ int arrayIsEmpty(Passenger* list, int len)
 
         for(i = 0; i < len; i++)
         {
-            if(list[i].isEmpty == FALSE)
+            if(!list[i].isEmpty)
             {
                 auxReturn = 0;
                 break;
@@ -158,7 +158,7 @@ int findPassengerById(Passenger* list, int len, int id)
     {
         for(i = 0; i < len; i++)
         {
-            if(list[i].isEmpty == FALSE && list[i].id == id)
+            if(!list[i].isEmpty && list[i].id == id)
             {
                 index = i;
                 break;
@@ -257,7 +257,7 @@ int sortPassengers(Passenger* list, int len, int order)
 
             for(i = 0; i < auxLen - 1; i++)
             {
-                if(list[i].isEmpty == FALSE && list[i + 1].isEmpty == FALSE)
+                if(!list[i].isEmpty && !list[i + 1].isEmpty)
                 {
 					auxCmp = compareString(list[i].lastName, list[i + 1].lastName, LAST_NAME_LEN);
 
@@ -329,7 +329,7 @@ int accumulatePassagePrices(Passenger* list, int len, float* accumulator)
 
         for(i = 0; i < len; i++)
         {
-            if(list[i].isEmpty == FALSE)
+            if(!list[i].isEmpty)
             {
                 *accumulator += list[i].price;
             }
@@ -352,7 +352,7 @@ int countPassagePrices(Passenger* list, int len, int* counter)
 
         for(i = 0; i < len; i++)
         {
-            if(list[i].isEmpty == FALSE)
+            if(!list[i].isEmpty)
             {
                 (*counter)++;
             }
@@ -389,7 +389,7 @@ int countExceededPricesFromAverage(Passenger* list, int len, float average, int*
 
 		for(i = 0; i < len; i++)
 		{
-			if(list[i].isEmpty == FALSE && list[i].price > average)
+			if(!list[i].isEmpty && list[i].price > average)
 			{
 				(*counter)++;
 			}

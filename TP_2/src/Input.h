@@ -73,16 +73,15 @@ int utn_getAlfabetico(char* pResultado, char* mensaje, char* mensajeError, int m
 int utn_getCaracter(char* pResultado, char* mensaje, char* mensajeError, char minimo, char maximo, int reintentos);
 
 
-/** \brief Se encarga de validar que la respuesta sólo sea s/n
+/** \brief Verifica si la respuesta es afirmativa
  *
- * \param pResp char* Puntero al espacio de memoria donde se guardará el dato validado ingresado
  * \param mensaje char* Texto que pide el valor
  * \param mensajeError char* Texto en caso de error
  *
  * \return int Retorna 1 si la respuesta es 'S', 0 si la respuesta es 'N' o -1 si hubo un error
  *
  */
-int verificarRespuesta(char* pResp, char* mensaje, char* mensajeError);
+int utn_respuestaEsAfirmativa(char* mensaje, char* mensajeError);
 
 
 #endif /* INPUT_H_ */

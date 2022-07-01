@@ -458,13 +458,13 @@ int utn_getCaracter(char* pResultado, char* mensaje, char* mensajeError, char mi
 	return retorno;
 }
 
-int verificarRespuesta(char* pResp, char* mensaje, char* mensajeError)
+int utn_respuestaEsAfirmativa(char* mensaje, char* mensajeError)
 {
-    char dato;
     int retorno = -1;
     int flagError = 0;
+    char dato = '\0';
 
-    if(pResp != NULL && mensaje != NULL && mensajeError != NULL)
+    if(mensaje != NULL && mensajeError != NULL)
     {
         do
         {
@@ -480,23 +480,34 @@ int verificarRespuesta(char* pResp, char* mensaje, char* mensajeError)
                 printf("%s", mensajeError);
             }
 
-            if(!getChar(&dato) && islower(dato))
+            if(!getChar(&dato))
             {
-            	dato = toupper(dato);
+            	if(islower(dato))
+            	{
+            		dato = toupper(dato);
+            	}
+            }
+
+            else
+            {
+            	break;
             }
 
         } while(dato != 'S' && dato != 'N');
 
-        *pResp = dato;
-
-        if(dato == 'S')
+        switch(dato)
         {
-            retorno = 1;
-        }
+        	case 'S':
 
-        else
-        {
-            retorno = 0;
+				retorno = 1;
+
+				break;
+
+        	case 'N':
+
+				retorno = 0;
+
+				break;
         }
     }
 

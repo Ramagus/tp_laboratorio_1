@@ -36,25 +36,4 @@ int hardCodeFlightStatus(FlightStatus* list, int len, int* id);
 int findFlightStatusById(FlightStatus* list, int len, int id);
 
 
-/** \brief Print the content of flight status
- *
- * \param aFlightCode FlightCode* Pointer to one flight status
- *
- * \return int (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
- *
- */
-int printAFlightStatus(FlightStatus* aFlightStatus);
-
-
-/** \brief Print the content of flight status array
- *
- * \param list FlightCode* Pointer to array of flight status
- * \param len int Array length
- *
- * \return int (-1) if Error [Invalid length or NULL pointer] - (0) if Ok
- *
- */
-int printFlightStatus(FlightStatus* list, int len);
-
-
 #endif /* FLIGHTSTATUS_H_ */

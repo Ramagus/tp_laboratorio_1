@@ -63,7 +63,7 @@ int printATypePassenger(TypePassenger* aTypePassenger)
 
     if(aTypePassenger != NULL)
     {
-        printf("%d %19s\n", aTypePassenger->id, aTypePassenger->description);
+        printf("|%-10d|%-20s|\n", aTypePassenger->id, aTypePassenger->description);
 
         auxReturn = 0;
     }
@@ -83,7 +83,10 @@ int printTypePassengers(TypePassenger* list, int len)
 		system("cls");
 
 		printf("\tLISTA DE TIPOS DE VUELOS\n\n");
-        printf("%s %18s\n\n", "ID", "DESCRIPCION");
+
+		printf("*----------*--------------------*\n");
+        printf("|%-10s|%-20s|\n", "ID", "DESCRIPCION");
+        printf("*----------*--------------------*\n");
 
         for(i = 0; i < len; i++)
         {
@@ -92,6 +95,8 @@ int printTypePassengers(TypePassenger* list, int len)
                 break;
             }
         }
+
+        printf("*----------*--------------------*\n");
 
         if(i == len)
         {

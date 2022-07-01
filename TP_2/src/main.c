@@ -19,7 +19,7 @@ int main()
 
     int option;
     int auxId;
-    char reply;
+    int flagExit = 0;
 
     int idPass = 1;
     int idCode = 1;
@@ -141,9 +141,11 @@ int main()
 
 					case 6:
 
-						if(verificarRespuesta(&reply, "\nEsta seguro que desea salir del menu? (S/N): ", "Error. Solo S o N: ") == 1)
+						if(utn_respuestaEsAfirmativa("\nEsta seguro que desea salir del menu? (S/N): ", "Error. Solo S o N: ") == 1)
 						{
 							printf("\nHa salido del menu de pasajeros\n");
+
+							flagExit = 1;
 						}
 
 						break;
@@ -154,7 +156,7 @@ int main()
 			system("pause");
 			system("cls");
 
-		} while(option != 6 || reply == 'N');
+		} while(option != 6 || !flagExit);
     }
 
     else

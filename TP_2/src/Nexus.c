@@ -13,8 +13,6 @@ int loadPassenger(Passenger* listPass, int lenPass, FlightCode* listFlightCode, 
 	float auxPrice;
 	int auxIdCode;
 	int auxTypePassenger;
-
-	int auxIdStatus;
 	int index;
 
 	if(listPass != NULL && lenPass > 0 && listFlightCode != NULL && lenFlightCode > 0 && listTypePassenger != NULL && lenTypePassenger > 0 && listFlightStatus != NULL && lenFlightStatus > 0 && idPass != NULL &&
@@ -22,19 +20,16 @@ int loadPassenger(Passenger* listPass, int lenPass, FlightCode* listFlightCode, 
 	   !utn_formatearCadena(auxName, NAME_LEN) &&
 	   !utn_getAlfabetico(auxLastName, "\nIngrese su apellido: ", "Error. Ingrese solo letras: ", 3, LAST_NAME_LEN, 2) &&
 	   !utn_formatearCadena(auxLastName, LAST_NAME_LEN) &&
-	   !utn_getNumeroFlotante(&auxPrice, "\nIngrese precio de pasajes entre 1 y 500000: ", "Error. Ingrese solo numeros flotantes dentro del rango: ", 1, 500000, 2) &&
+	   !utn_getNumeroFlotante(&auxPrice, "\nIngrese precio de pasaje entre 1 y 500000: ", "Error. Ingrese solo numeros flotantes dentro del rango: ", 1, 500000, 2) &&
 	   !printFlightCodes(listFlightCode, lenFlightCode, listFlightStatus, lenFlightStatus) &&
-	   !utn_getNumero(&auxIdCode, "\nIngrese el ID del codigo de vuelo: ", "Error. Ingrese solo numeros enteros dentro del rango: ", 1, 8, 2) &&
-	   findFlightCodeById(listFlightCode, lenFlightCode, auxTypePassenger) > -1 &&
-	   !printTypePassengers(listTypePassenger, lenTypePassenger) &&
-	   !utn_getNumero(&auxTypePassenger, "\nIngrese el ID del tipo de pasajero: ", "Error. Ingrese solo numeros enteros dentro del rango: ", 1, 4, 2) &&
-	   findTypePassengerById(listTypePassenger, lenTypePassenger, auxTypePassenger) > -1 &&
-	   !printFlightCodes(listFlightCode, lenFlightCode, listFlightStatus, lenFlightStatus) &&
-	   !utn_getNumero(&auxIdStatus, "\nIngrese el ID del estado de vuelo: ", "Error. Ingrese solo numeros enteros dentro del rango: ", 1, 4, 2))
+	   !utn_getNumero(&auxIdCode, "\nIngrese el ID del codigo de vuelo: ", "Error. Ingrese solo numeros enteros dentro del rango: ", 1, 8, 2))
 	{
-		index = findFlightCodeById(listFlightCode, lenFlightCode, auxIdStatus);
+		index = findFlightCodeById(listFlightCode, lenFlightCode, auxIdCode);
 
-		if(index > -1 && !addPassenger(listPass, lenPass, *idPass, auxName, auxLastName, auxPrice, listFlightCode[index].code, auxTypePassenger))
+		if(index > -1 && !printTypePassengers(listTypePassenger, lenTypePassenger) &&
+		   !utn_getNumero(&auxTypePassenger, "\nIngrese el ID del tipo de pasajero: ", "Error. Ingrese solo numeros enteros dentro del rango: ", 1, 4, 2) &&
+		   findTypePassengerById(listTypePassenger, lenTypePassenger, auxTypePassenger) > -1 &&
+		   !addPassenger(listPass, lenPass, *idPass, auxName, auxLastName, auxPrice, listFlightCode[index].code, auxTypePassenger))
 		{
 			(*idPass)++;
 
@@ -50,7 +45,6 @@ int modifyPassenger(Passenger* listPass, int lenPass, FlightCode* listFlightCode
     int auxReturn = -1;
     int indexPass;
     int indexType;
-    char reply;
 
     if(listPass != NULL && lenPass > 0 && listFlightCode != NULL && lenFlightCode > 0 && listTypePassenger != NULL && lenTypePassenger > 0 && listFlightStatus != NULL && lenFlightStatus > 0 && idPass > 0)
     {
@@ -68,10 +62,13 @@ int modifyPassenger(Passenger* listPass, int lenPass, FlightCode* listFlightCode
 
 				printf("\tMODIFICACION DE PASAJERO\n\n");
 
-				printf("%s %18s %20s %18s %22s %20s\n\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
+				printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
+				printf("|%-10s|%-20s|%-20s|%-10s|%-20s|%-20s|\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
+				printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
 				printAPassenger(&listPass[indexPass], &listTypePassenger[indexType]);
+				printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
 
-				if(verificarRespuesta(&reply, "\nEsta seguro que desea modificar a este pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+				if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar a este pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
 				   !showModificationsMenu(listPass, lenPass, listFlightCode, lenFlightCode, listTypePassenger, lenTypePassenger, listFlightStatus, lenFlightStatus, indexPass))
 				{
 					auxReturn = 0;
@@ -92,13 +89,10 @@ int showModificationsMenu(Passenger* listPass, int lenPass, FlightCode* listFlig
 	float auxPrice;
 	int auxIdCode;
 	int auxTypePassenger;
-
 	int indexCode;
-
 	char option;
-	char reply;
-
-	int flag = FALSE;
+	int flagMod = FALSE;
+	int flagExit = FALSE;
 
     if(listPass != NULL && lenPass > 0 && listFlightCode != NULL && lenFlightCode > 0 && listTypePassenger != NULL && lenTypePassenger > 0 && listFlightStatus != NULL && lenFlightStatus > 0 && indexPass >= 0 && indexPass < lenPass)
     {
@@ -122,43 +116,43 @@ int showModificationsMenu(Passenger* listPass, int lenPass, FlightCode* listFlig
                 {
                     case 'A':
 
-                        if(verificarRespuesta(&reply, "\nEsta seguro que desea modificar el nombre del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el nombre del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
                            !utn_getAlfabetico(auxName, "\nIngrese nuevo nombre: ", "Error. Ingrese solo letras: ", 3, NAME_LEN, 2) && !utn_formatearCadena(auxName, NAME_LEN))
                         {
                             strncpy(listPass[indexPass].name, auxName, NAME_LEN);
 
-                            flag = TRUE;
+                            flagMod = TRUE;
                         }
 
                         break;
 
                     case 'B':
 
-                        if(verificarRespuesta(&reply, "\nEsta seguro que desea modificar el apellido del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el apellido del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
                            !utn_getAlfabetico(auxLastName, "\nIngrese nuevo apellido: ", "Error. Ingrese solo letras: ", 3, LAST_NAME_LEN, 2) && !utn_formatearCadena(auxLastName, LAST_NAME_LEN))
                         {
                             strncpy(listPass[indexPass].lastName, auxLastName, LAST_NAME_LEN);
 
-                            flag = TRUE;
+                            flagMod = TRUE;
                         }
 
                         break;
 
                     case 'C':
 
-                        if(verificarRespuesta(&reply, "\nEsta seguro que desea modificar el precio de pasaje del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
-                           !utn_getNumeroFlotante(&auxPrice, "\nIngrese nuevo precio entre 1 y 500000: ", "Error. Ingrese solo numeros flotantes dentro del rango: ", 1, 500000, 2))
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el precio de pasaje del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                           !utn_getNumeroFlotante(&auxPrice, "\nIngrese nuevo precio de pasaje entre 1 y 500000: ", "Error. Ingrese solo numeros flotantes dentro del rango: ", 1, 500000, 2))
                         {
                             listPass[indexPass].price = auxPrice;
 
-                            flag = TRUE;
+                            flagMod = TRUE;
                         }
 
                         break;
 
                     case 'D':
 
-                    	if(verificarRespuesta(&reply, "\nEsta seguro que desea modificar el codigo de vuelo del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                    	if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el codigo de vuelo del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
                     	   !printFlightCodes(listFlightCode, lenFlightCode, listFlightStatus, lenFlightStatus) &&
                     	   !utn_getNumero(&auxIdCode, "\nIngrese el ID del codigo de vuelo: ", "Error. Ingrese solo numeros enteros dentro del rango: ", 1, 8, 2))
                     	{
@@ -168,7 +162,7 @@ int showModificationsMenu(Passenger* listPass, int lenPass, FlightCode* listFlig
                     	    {
 								strncpy(listPass[indexPass].flightCode, listFlightCode[indexCode].code, FLIGHT_CODE_LEN);
 
-								flag = TRUE;
+								flagMod = TRUE;
                     	    }
                     	}
 
@@ -176,32 +170,34 @@ int showModificationsMenu(Passenger* listPass, int lenPass, FlightCode* listFlig
 
                     case 'E':
 
-                        if(verificarRespuesta(&reply, "\nEsta seguro que desea modificar el tipo de pasajero de este pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el tipo de pasajero de este pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
                            !printTypePassengers(listTypePassenger, lenTypePassenger) &&
                            !utn_getNumero(&auxTypePassenger, "\nIngrese el ID del tipo de pasajero: ", "Error. Ingrese solo numeros enteros dentro del rango: ", 1, 4, 2) &&
 						   findTypePassengerById(listTypePassenger, lenTypePassenger, auxTypePassenger) > -1)
                         {
 							listPass[indexPass].typePassenger = auxTypePassenger;
 
-							flag = TRUE;
+							flagMod = TRUE;
                         }
 
                         break;
 
                     case 'F':
 
-                    	if(verificarRespuesta(&reply, "\nEsta seguro que desea salir del menu? (S/N): ", "\nError. Solo S o N: ") == 1)
+                    	if(utn_respuestaEsAfirmativa("\nEsta seguro que desea salir del menu? (S/N): ", "\nError. Solo S o N: ") == 1)
                     	{
                     		printf("\nHa salido del menu de modificacion\n");
+
+                    		flagExit = TRUE;
                     	}
 
                     	break;
                 }
             }
 
-        } while(option != 'F' || reply == 'N');
+        } while(option != 'F' || !flagExit);
 
-        if(flag)
+        if(flagMod)
         {
         	auxReturn = 0;
         }
@@ -215,7 +211,6 @@ int removePassenger(Passenger* listPass, int lenPass, TypePassenger* listTypePas
     int auxReturn = -1;
     int indexPass;
     int indexType;
-    char reply;
 
     if(listPass != NULL && lenPass > 0 && listTypePassenger != NULL && lenTypePassenger > 0 && idPass > 0)
     {
@@ -233,10 +228,13 @@ int removePassenger(Passenger* listPass, int lenPass, TypePassenger* listTypePas
 
 				printf("\tBAJA DE PASAJERO\n\n");
 
-				printf("%s %18s %20s %18s %22s %20s\n\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
+				printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
+				printf("|%-10s|%-20s|%-20s|%-10s|%-20s|%-20s|\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
+				printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
 				printAPassenger(&listPass[indexPass], &listTypePassenger[indexType]);
+				printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
 
-				if(verificarRespuesta(&reply, "\nEsta seguro que desea eliminar a este pasajero? (S/N): ", "\nError. Solo S o N: ") == 1)
+				if(utn_respuestaEsAfirmativa("\nEsta seguro que desea eliminar a este pasajero? (S/N): ", "\nError. Solo S o N: ") == 1)
 				{
 					listPass[indexPass].isEmpty = TRUE;
 					auxReturn = 0;
@@ -269,7 +267,7 @@ int sortPassengersByCode(Passenger* listPass, int lenPass, FlightCode* listFligh
 
             for(i = 0; i < auxLen - 1; i++)
             {
-                if(listPass[i].isEmpty == FALSE && listPass[i + 1].isEmpty == FALSE)
+                if(!listPass[i].isEmpty && !listPass[i + 1].isEmpty)
                 {
 					if(compareString(listPass[i].flightCode, listPass[i + 1].flightCode, FLIGHT_CODE_LEN) == order - !order)
 					{
@@ -307,7 +305,7 @@ int printAPassenger(Passenger* aPassenger, TypePassenger* aTypePassenger)
 
     if(aPassenger != NULL && aTypePassenger != NULL)
     {
-        printf("%d %19s %20s %18.2f %22s %20s\n", aPassenger->id, aPassenger->name, aPassenger->lastName, aPassenger->price, aPassenger->flightCode, aTypePassenger->description);
+        printf("|%-10d|%-20s|%-20s|%-10.2f|%-20s|%-20s|\n", aPassenger->id, aPassenger->name, aPassenger->lastName, aPassenger->price, aPassenger->flightCode, aTypePassenger->description);
 
         auxReturn = 0;
     }
@@ -328,11 +326,14 @@ int printPassengers(Passenger* listPass, int lenPass, TypePassenger* listTypePas
 		system("cls");
 
 		printf("\tLISTA DE PASAJEROS\n\n");
-        printf("%s %18s %20s %18s %22s %20s\n\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
+
+		printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
+        printf("|%-10s|%-20s|%-20s|%-10s|%-20s|%-20s|\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
+        printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
 
         for(i = 0; i < lenPass; i++)
         {
-            if(listPass[i].isEmpty == FALSE)
+            if(!listPass[i].isEmpty)
             {
             	index = findTypePassengerById(listTypePassengers, lenTypePassenger, listPass[i].typePassenger);
 
@@ -342,6 +343,8 @@ int printPassengers(Passenger* listPass, int lenPass, TypePassenger* listTypePas
                 }
             }
         }
+
+        printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
 
         if(i == lenPass)
         {
@@ -366,12 +369,9 @@ int printPassengersByStatus(Passenger* listPass, int lenPass, FlightCode* listFl
 		system("pause");
 		system("cls");
 
-		printf("\tLISTA DE PASAJEROS\n\n");
-		printf("%s %18s %20s %18s %22s %20s\n\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
-
 		for(i = 0; i < lenPass; i++)
 		{
-			if(listPass[i].isEmpty == FALSE)
+			if(!listPass[i].isEmpty)
 			{
 				indexCode = findFlightCodeByCode(listFlightCode, lenFlightCode, listPass[i].flightCode);
 
@@ -381,6 +381,15 @@ int printPassengersByStatus(Passenger* listPass, int lenPass, FlightCode* listFl
 
 					if(indexType > -1)
 					{
+						if(!flag)
+						{
+							printf("\tLISTA DE PASAJEROS\n\n");
+
+							printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
+							printf("|%-10s|%-20s|%-20s|%-10s|%-20s|%-20s|\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO");
+							printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
+						}
+
 						if(!printAPassenger(&listPass[i], &listTypePassenger[indexType]))
 						{
 							flag = TRUE;
@@ -397,9 +406,14 @@ int printPassengersByStatus(Passenger* listPass, int lenPass, FlightCode* listFl
 
 		if(i == lenPass)
 		{
-			if(!flag)
+			if(flag)
 			{
-				printf("\nNo hay vuelos activos\n");
+				printf("*----------*--------------------*--------------------*----------*--------------------*--------------------*\n");
+			}
+
+			else
+			{
+				printf("\tNo hay vuelos activos\n");
 			}
 
 			auxReturn = 0;
@@ -415,7 +429,7 @@ int printAFlightCode(FlightCode* aFlightCode, FlightStatus* aFlightStatus)
 
     if(aFlightCode != NULL && aFlightStatus != NULL)
     {
-        printf("%d %19s %19s\n", aFlightCode->id, aFlightCode->code, aFlightStatus->description);
+        printf("|%-10d|%-20s|%-20s|\n", aFlightCode->id, aFlightCode->code, aFlightStatus->description);
 
         auxReturn = 0;
     }
@@ -436,7 +450,10 @@ int printFlightCodes(FlightCode* listFlightCode, int lenFlightCode, FlightStatus
 		system("cls");
 
 		printf("\tLISTA DE VUELOS\n\n");
-        printf("%s %18s %19s\n\n", "ID", "CODIGO", "ESTADO");
+
+		printf("*----------*--------------------*--------------------*\n");
+        printf("|%-10s|%-20s|%-20s|\n", "ID", "CODIGO", "ESTADO");
+        printf("*----------*--------------------*--------------------*\n");
 
         for(i = 0; i < lenFlightCode; i++)
         {
@@ -447,6 +464,8 @@ int printFlightCodes(FlightCode* listFlightCode, int lenFlightCode, FlightStatus
                 break;
             }
         }
+
+        printf("*----------*--------------------*--------------------*\n");
 
         if(i == lenFlightCode)
         {
@@ -466,10 +485,9 @@ int showReportsMenu(Passenger* listPass, int lenPass, FlightCode* listFlightCode
     int priceCounter;
     float averagePrice;
     int passengerCounter;
-    int flag = FALSE;
-
     int option;
-    char reply;
+    int flagReport = FALSE;
+    int flagExit = FALSE;
 
     if(listPass != NULL && lenPass > 0 && listFlightCode != NULL && lenFlightCode > 0 && listTypePassenger != NULL && lenTypePassenger > 0 && listFlightStatus != NULL && lenFlightStatus > 0)
     {
@@ -499,7 +517,7 @@ int showReportsMenu(Passenger* listPass, int lenPass, FlightCode* listFlightCode
                             {
                                 printf("\nLista mostrada correctamente\n");
 
-                                flag = TRUE;
+                                flagReport = TRUE;
                             }
 
                             else
@@ -539,7 +557,7 @@ int showReportsMenu(Passenger* listPass, int lenPass, FlightCode* listFlightCode
                             	printf("\nNo hay pasajeros que superen el precio promedio\n");
                             }
 
-                            flag = TRUE;
+                            flagReport = TRUE;
                         }
 
                         else
@@ -559,7 +577,7 @@ int showReportsMenu(Passenger* listPass, int lenPass, FlightCode* listFlightCode
 							{
 								printf("\nLista mostrada correctamente\n");
 
-								flag = TRUE;
+								flagReport = TRUE;
 							}
 
 							else
@@ -577,18 +595,20 @@ int showReportsMenu(Passenger* listPass, int lenPass, FlightCode* listFlightCode
 
                     case 4:
 
-                        if(verificarRespuesta(&reply, "\nEsta seguro que desea salir del menu? (S/N): ", "\nError. Solo S o N: ") == 1)
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea salir del menu? (S/N): ", "\nError. Solo S o N: ") == 1)
                         {
                             printf("\nHa salido del menu de informes\n");
+
+                            flagExit = TRUE;
                         }
 
                         break;
                 }
             }
 
-        } while(option != 4 || reply == 'N');
+        } while(option != 4 || !flagExit);
 
-        if(flag)
+        if(flagReport)
         {
         	auxReturn = 0;
         }
