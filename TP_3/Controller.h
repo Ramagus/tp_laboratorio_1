@@ -4,7 +4,7 @@
 /** \brief Carga los datos de los pasajeros desde el archivo data.csv (modo texto)
  *
  * \param path char* Ruta donde se encuentra el archivo
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  * \param id int* ID de pasajero a asignar
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
@@ -16,7 +16,7 @@ int controller_loadFromText(char* path, LinkedList* pArrayListPassenger, int* id
 /** \brief Carga los datos de los pasajeros desde el archivo data.bin (modo binario)
  *
  * \param path char* Ruta donde se encuentra el archivo
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  * \param id int* ID de pasajero a asignar
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
@@ -27,7 +27,7 @@ int controller_loadFromBinary(char* path, LinkedList* pArrayListPassenger, int* 
 
 /** \brief Alta de pasajero
  *
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  * \param id int* ID de pasajero a asignar
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
@@ -38,7 +38,7 @@ int controller_addPassenger(LinkedList* pArrayListPassenger, int* id);
 
 /** \brief Modificar datos de pasajero
  *
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
  *
@@ -48,7 +48,7 @@ int controller_editPassenger(LinkedList* pArrayListPassenger);
 
 /** \brief Baja de pasajero
  *
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
  *
@@ -58,7 +58,7 @@ int controller_removePassenger(LinkedList* pArrayListPassenger);
 
 /** \brief Listar pasajeros
  *
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
  *
@@ -68,7 +68,7 @@ int controller_listPassenger(LinkedList* pArrayListPassenger);
 
 /** \brief Ordenar pasajeros
  *
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
  *
@@ -79,7 +79,7 @@ int controller_sortPassenger(LinkedList* pArrayListPassenger);
 /** \brief Guarda los datos de los pasajeros en el archivo data.csv (modo texto)
  *
  * \param path char* Ruta donde se encuentra el archivo
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
  *
@@ -90,7 +90,7 @@ int controller_saveAsText(char* path, LinkedList* pArrayListPassenger);
 /** \brief Guarda los datos de los pasajeros en el archivo data.bin (modo binario)
  *
  * \param path char* Ruta donde se encuentra el archivo
- * \param pArrayListEmployee LinkedList* Puntero al LinkedList
+ * \param pArrayListPassenger LinkedList* Puntero al LinkedList
  *
  * \return int Retorna 0 si está todo Ok o -1 si hubo un error
  *

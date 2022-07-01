@@ -710,7 +710,7 @@ static int showModificationsMenu(Passenger* this)
             printf("\tMENU DE MODIFICACION DE PASAJERO\n\n");
             printf("A. Nombre\n");
             printf("B. Apellido\n");
-            printf("C. Precio\n");
+            printf("C. Precio de Pasaje\n");
             printf("D. Codigo de Vuelo\n");
             printf("E. Tipo de Pasajero\n");
             printf("F. Estado de Vuelo\n");
@@ -722,7 +722,8 @@ static int showModificationsMenu(Passenger* this)
                 {
                     case 'A':
 
-                        if(!utn_getAlfabetico(auxNombre, "\nIngrese nuevo nombre: ", "Error. Solo letras: ", 3, NAME_LEN, 2) &&
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el nombre del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                           !utn_getAlfabetico(auxNombre, "\nIngrese nuevo nombre: ", "Error. Solo letras: ", 3, NAME_LEN, 2) &&
                            !utn_formatearCadena(auxNombre, NAME_LEN) && !Passenger_setNombre(this, auxNombre))
                         {
                             flagMod = 1;
@@ -732,7 +733,8 @@ static int showModificationsMenu(Passenger* this)
 
                     case 'B':
 
-                        if(!utn_getAlfabetico(auxApellido, "\nIngrese nuevo apellido: ", "Error. Solo letras: ", 3, LAST_NAME_LEN, 2) &&
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el apellido del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                           !utn_getAlfabetico(auxApellido, "\nIngrese nuevo apellido: ", "Error. Solo letras: ", 3, LAST_NAME_LEN, 2) &&
                            !utn_formatearCadena(auxApellido, LAST_NAME_LEN) && !Passenger_setApellido(this, auxApellido))
                         {
                             flagMod = 1;
@@ -742,7 +744,8 @@ static int showModificationsMenu(Passenger* this)
 
                     case 'C':
 
-                        if(!utn_getNumeroFlotante(&auxPrecio, "\nIngrese nuevo precio entre 10000 y 500000: ", "Error. Solo numeros flotantes dentro del rango: ", 10000, 500000, 2) &&
+                        if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el precio de pasaje del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                           !utn_getNumeroFlotante(&auxPrecio, "\nIngrese nuevo precio de pasaje entre 10000 y 500000: ", "Error. Solo numeros flotantes dentro del rango: ", 10000, 500000, 2) &&
                            !Passenger_setPrecio(this, auxPrecio))
                         {
                             flagMod = 1;
@@ -752,7 +755,8 @@ static int showModificationsMenu(Passenger* this)
 
                     case 'D':
 
-                    	if(!utn_getAlfaNumerico(auxCodigoVuelo, "\nIngrese nuevo codigo de vuelo: ", "Error. Solo letras y/o numeros: ", 3, FLIGHT_CODE_LEN, 2) &&
+                    	if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar codigo de vuelo del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                    	   !utn_getAlfaNumerico(auxCodigoVuelo, "\nIngrese nuevo codigo de vuelo: ", "Error. Solo letras y/o numeros: ", 3, FLIGHT_CODE_LEN, 2) &&
                     	   strupr(auxCodigoVuelo) != NULL && !Passenger_setCodigoVuelo(this, auxCodigoVuelo))
                     	{
                     		flagMod = 1;
@@ -762,7 +766,8 @@ static int showModificationsMenu(Passenger* this)
 
                     case 'E':
 
-                    	if(!chooseTypePassenger(auxTipoPasajero) && !Passenger_setTipoPasajero(this, auxTipoPasajero))
+                    	if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el tipo del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                    	   !chooseTypePassenger(auxTipoPasajero) && !Passenger_setTipoPasajero(this, auxTipoPasajero))
                     	{
                     		flagMod = 1;
                     	}
@@ -771,7 +776,8 @@ static int showModificationsMenu(Passenger* this)
 
                     case 'F':
 
-                    	if(!chooseFlightStatus(auxEstadoVuelo) && !Passenger_setEstadoVuelo(this, auxEstadoVuelo))
+                    	if(utn_respuestaEsAfirmativa("\nEsta seguro que desea modificar el estado de vuelo del pasajero? (S/N): ", "\nError. Solo S o N: ") == 1 &&
+                    	   !chooseFlightStatus(auxEstadoVuelo) && !Passenger_setEstadoVuelo(this, auxEstadoVuelo))
                     	{
                     		flagMod = 1;
                     	}
@@ -819,7 +825,7 @@ static int printAPassenger(Passenger* this)
        !Passenger_getCodigoVuelo(this, auxCodigoVuelo) && !Passenger_getTipoPasajero(this, auxTipoPasajero) &&
 	   !Passenger_getEstadoVuelo(this, auxEstadoVuelo))
     {
-        printf("|%-10d|%-16s|%-12s|%-10.2f|%-18s|%-18s|%-18s|\n", auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
+        printf("|%-10d|%-14s|%-14s|%-16.2f|%-16s|%-16s|%-16s|\n", auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxEstadoVuelo);
 
         auxReturn = 0;
     }
@@ -953,7 +959,7 @@ int Passenger_add(LinkedList* pArrayListPassenger, int* id)
        !utn_formatearCadena(auxNombre, NAME_LEN) &&
 	   !utn_getAlfabetico(auxApellido, "\nIngrese apellido: ", "Error. Solo letras: ", 3, LAST_NAME_LEN, 2) &&
 	   !utn_formatearCadena(auxApellido, LAST_NAME_LEN) &&
-	   !utn_getNumeroFlotante(&auxPrecio, "\nIngrese precio entre 10000 y 500000: ", "Error. Solo numeros flotantes dentro del rango: ", 10000, 500000, 2) &&
+	   !utn_getNumeroFlotante(&auxPrecio, "\nIngrese precio de pasaje entre 10000 y 500000: ", "Error. Solo numeros flotantes dentro del rango: ", 10000, 500000, 2) &&
 	   !utn_getAlfaNumerico(auxCodigoVuelo, "\nIngrese codigo de vuelo: ", "Error. Solo letras y/o numeros: ", 3, FLIGHT_CODE_LEN, 2) &&
 	   strupr(auxCodigoVuelo) != NULL && !chooseTypePassenger(auxTipoPasajero) && !chooseFlightStatus(auxEstadoVuelo))
     {
@@ -1071,9 +1077,9 @@ int Passenger_listPassenger(LinkedList* pArrayListPassenger)
 
             printf("\tLISTA DE PASAJEROS\n\n");
 
-            printf("*----------*----------------*------------*----------*------------------*------------------*------------------*\n");
-            printf("|%-10s|%-16s|%-12s|%-10s|%-18s|%-18s|%-18s|\n", "ID", "NOMBRE", "APELLIDO", "PRECIO", "CODIGO DE VUELO", "TIPO DE PASAJERO", "ESTADO DE VUELO");
-            printf("*----------*----------------*------------*----------*------------------*------------------*------------------*\n");
+            printf("*----------*--------------*--------------*----------------*----------------*----------------*----------------*\n");
+            printf("|%-10s|%-14s|%-14s|%-16s|%-16s|%-16s|%-16s|\n", "ID", "NOMBRE", "APELLIDO", "PRECIO DE PASAJE", "CODIGO DE VUELO", "TIPO DE PASAJERO", "ESTADO DE VUELO");
+            printf("*----------*--------------*--------------*----------------*----------------*----------------*----------------*\n");
 
             for(i = 0; i < length; i++)
             {
@@ -1085,7 +1091,7 @@ int Passenger_listPassenger(LinkedList* pArrayListPassenger)
                 }
             }
 
-            printf("*----------*----------------*------------*----------*------------------*------------------*------------------*\n");
+            printf("*----------*--------------*--------------*----------------*----------------*----------------*----------------*\n");
 
             if(i == length)
             {
@@ -1144,7 +1150,7 @@ int Passenger_chooseCriterionOrder(int (**pFunc)(void*, void*))
         printf("A. ID\n");
         printf("B. Nombre\n");
         printf("C. Apellido\n");
-        printf("D. Precio\n");
+        printf("D. Precio de Pasaje\n");
         printf("E. Codigo de Vuelo\n");
         printf("F. Tipo de Pasajero\n");
         printf("G. Estado de Vuelo\n");

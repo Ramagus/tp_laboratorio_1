@@ -3,7 +3,7 @@
 #include "Passenger.h"
 #include "Serializer.h"
 
-int serializer_PassengerToText(FILE* pFile, LinkedList* pArrayListEmployee)
+int serializer_PassengerToText(FILE* pFile, LinkedList* pArrayListPassenger)
 {
 	int auxReturn = -1;
 	int length;
@@ -19,9 +19,9 @@ int serializer_PassengerToText(FILE* pFile, LinkedList* pArrayListEmployee)
 	char auxTipoPasajero[BUFFER_LEN_SER];
 	char auxEstadoVuelo[BUFFER_LEN_SER];
 
-	if(pFile != NULL && pArrayListEmployee != NULL)
+	if(pFile != NULL && pArrayListPassenger != NULL)
 	{
-		length = ll_len(pArrayListEmployee);
+		length = ll_len(pArrayListPassenger);
 
 		if(length > 0)
 		{
@@ -29,7 +29,7 @@ int serializer_PassengerToText(FILE* pFile, LinkedList* pArrayListEmployee)
 
 			for(i = 0; i < length; i++)
 			{
-				this = (Passenger*) ll_get(pArrayListEmployee, i);
+				this = (Passenger*) ll_get(pArrayListPassenger, i);
 
 				if(this != NULL && !Passenger_getIdTxt(this, auxId) && !Passenger_getNombre(this, auxNombre) &&
 				   !Passenger_getApellido(this, auxApellido) && !Passenger_getPrecioTxt(this, auxPrecio) &&
@@ -55,7 +55,7 @@ int serializer_PassengerToText(FILE* pFile, LinkedList* pArrayListEmployee)
 	return auxReturn;
 }
 
-int serializer_PassengerToBinary(FILE* pFile, LinkedList* pArrayListEmployee)
+int serializer_PassengerToBinary(FILE* pFile, LinkedList* pArrayListPassenger)
 {
 	int auxReturn = -1;
 	int length;
@@ -63,15 +63,15 @@ int serializer_PassengerToBinary(FILE* pFile, LinkedList* pArrayListEmployee)
 
 	Passenger* this = NULL;
 
-	if(pFile != NULL && pArrayListEmployee != NULL)
+	if(pFile != NULL && pArrayListPassenger != NULL)
 	{
-		length = ll_len(pArrayListEmployee);
+		length = ll_len(pArrayListPassenger);
 
 		if(length > 0)
 		{
 			for(i = 0; i < length; i++)
 			{
-				this = (Passenger*) ll_get(pArrayListEmployee, i);
+				this = (Passenger*) ll_get(pArrayListPassenger, i);
 
 				if(this == NULL || fwrite(this, sizeof(Passenger), 1, pFile) != 1)
 				{
