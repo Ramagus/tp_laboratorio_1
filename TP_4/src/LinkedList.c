@@ -205,6 +205,7 @@ int ll_remove(LinkedList* this, int index)
 		if(index == 0 || pPrevNode != NULL)
 		{
 			free(pActualNode);
+			pActualNode = NULL;
 
 			this->size--;
 			auxReturn = 0;
