@@ -7,39 +7,54 @@ int parser_PassengerFromText(FILE* pFile, LinkedList* pArrayListPassenger, int* 
 {
 	int auxReturn = -1;
 	int flag = 0;
+	int auxId;
 
-	char idStr[BUFFER_LEN_PAR];
-	char nombreStr[BUFFER_LEN_PAR];
-	char apellidoStr[BUFFER_LEN_PAR];
-	char precioStr[BUFFER_LEN_PAR];
-	char codigoVueloStr[BUFFER_LEN_PAR];
-	char tipoPasajeroStr[BUFFER_LEN_PAR];
-	char estadoVueloStr[BUFFER_LEN_PAR];
+	char buffer[7][BUFFER_LEN_PAR];
 
 	Passenger* this = NULL;
-	int auxId;
 
 	if(pFile != NULL && pArrayListPassenger != NULL && id != NULL)
 	{
 		do
 		{
-			if(fscanf(pFile, "%[^,], %[^,], %[^,], %[^,], %[^,], %[^,], %[^\n]\n", idStr, nombreStr, apellidoStr, precioStr, codigoVueloStr, tipoPasajeroStr, estadoVueloStr) == 7)
+			this = Passenger_new();
+
+			if(!Passenger_delete(this))
 			{
-				this = Passenger_newParametrosTxt(idStr, nombreStr, apellidoStr, precioStr, codigoVueloStr, tipoPasajeroStr, estadoVueloStr);
+				this = NULL;
 
-				if(this != NULL)
+				if(fscanf(pFile, "%[^,], %[^,], %[^,], %[^,], %[^,], %[^,], %[^\n]\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6]) == 7)
 				{
-					auxId = atoi(idStr);
+					this = Passenger_newParametrosTxt(buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6]);
 
-					if(auxId > *id)
+					if(this != NULL)
 					{
-						*id = auxId + 1;
+						if(!ll_add(pArrayListPassenger, this))
+						{
+							auxId = atoi(buffer[0]);
+
+							if(auxId > *id)
+							{
+								*id = auxId + 1;
+							}
+
+							flag = 1;
+						}
+
+						else
+						{
+							Passenger_delete(this);
+							this = NULL;
+
+							break;
+						}
 					}
-
-					ll_add(pArrayListPassenger, this);
-
-					flag = 1;
 				}
+			}
+
+			else
+			{
+				break;
 			}
 
 		} while(!feof(pFile));
@@ -57,10 +72,11 @@ int parser_PassengerFromText(FILE* pFile, LinkedList* pArrayListPassenger, int* 
 int parser_PassengerFromBinary(FILE* pFile, LinkedList* pArrayListPassenger, int* id)
 {
 	int auxReturn = -1;
-	int flag = 0;
+	int flagParse = 0;
+	int flagRead;
+	int auxId;
 
 	Passenger* this = NULL;
-	int auxId;
 
 	if(pFile != NULL && pArrayListPassenger != NULL && id != NULL)
 	{
@@ -70,27 +86,43 @@ int parser_PassengerFromBinary(FILE* pFile, LinkedList* pArrayListPassenger, int
 
 			if(this != NULL)
 			{
+				flagRead = 0;
+
 				if(fread(this, sizeof(Passenger), 1, pFile) == 1)
+				{
+					flagRead = 1;
+				}
+
+				if(flagRead && !ll_add(pArrayListPassenger, this))
 				{
 					if(!Passenger_getId(this, &auxId) && auxId > *id)
 					{
 						*id = auxId + 1;
 					}
 
-					ll_add(pArrayListPassenger, this);
-
-					flag = 1;
+					flagParse = 1;
 				}
 
 				else
 				{
 					Passenger_delete(this);
+					this = NULL;
+
+					if(flagRead)
+					{
+						break;
+					}
 				}
+			}
+
+			else
+			{
+				break;
 			}
 
 		} while(!feof(pFile));
 
-		if(flag)
+		if(flagParse)
 		{
 			auxReturn = 0;
 		}

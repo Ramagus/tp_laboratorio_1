@@ -23,6 +23,7 @@ int controller_loadFromText(char* path, LinkedList* pArrayListPassenger, int* id
 			}
 
 			fclose(pFile);
+			pFile = NULL;
 		}
 	}
 
@@ -47,6 +48,7 @@ int controller_loadFromBinary(char* path, LinkedList* pArrayListPassenger, int* 
 			}
 
 			fclose(pFile);
+			pFile = NULL;
 		}
 	}
 
@@ -131,6 +133,7 @@ int controller_saveAsText(char* path, LinkedList* pArrayListPassenger)
 			}
 
 			fclose(pFile);
+			pFile = NULL;
 		}
 	}
 
@@ -155,6 +158,7 @@ int controller_saveAsBinary(char* path, LinkedList* pArrayListPassenger)
 			}
 
 			fclose(pFile);
+			pFile = NULL;
 		}
 	}
 
@@ -178,6 +182,7 @@ int controller_fileExists(char* path, char* mode)
             auxReturn = 1;
 
             fclose(pFile);
+            pFile = NULL;
         }
     }
 

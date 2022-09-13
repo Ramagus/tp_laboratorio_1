@@ -1047,6 +1047,8 @@ int Passenger_remove(LinkedList* pArrayListPassenger)
             if(utn_respuestaEsAfirmativa("\nEsta seguro que desea eliminar a este pasajero? (S/N): ", "Error. Solo S/N: ") == 1)
             {
                 Passenger_delete(this);
+                this = NULL;
+
                 ll_remove(pArrayListPassenger, index);
 
                 auxReturn = 0;
@@ -1119,9 +1121,14 @@ int Passenger_clear(LinkedList* pArrayListPassenger)
         {
             this = (Passenger*) ll_get(pArrayListPassenger, i);
 
-            if(Passenger_delete(this))
+            if(!Passenger_delete(this))
             {
-                break;
+                this = NULL;
+            }
+
+            else
+            {
+            	break;
             }
         }
 

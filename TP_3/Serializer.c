@@ -11,13 +11,7 @@ int serializer_PassengerToText(FILE* pFile, LinkedList* pArrayListPassenger)
 
 	Passenger* this = NULL;
 
-	char auxId[BUFFER_LEN_SER];
-	char auxNombre[BUFFER_LEN_SER];
-	char auxApellido[BUFFER_LEN_SER];
-	char auxPrecio[BUFFER_LEN_SER];
-	char auxCodigoVuelo[BUFFER_LEN_SER];
-	char auxTipoPasajero[BUFFER_LEN_SER];
-	char auxEstadoVuelo[BUFFER_LEN_SER];
+	char buffer[7][BUFFER_LEN_SER];
 
 	if(pFile != NULL && pArrayListPassenger != NULL)
 	{
@@ -31,12 +25,12 @@ int serializer_PassengerToText(FILE* pFile, LinkedList* pArrayListPassenger)
 			{
 				this = (Passenger*) ll_get(pArrayListPassenger, i);
 
-				if(this != NULL && !Passenger_getIdTxt(this, auxId) && !Passenger_getNombre(this, auxNombre) &&
-				   !Passenger_getApellido(this, auxApellido) && !Passenger_getPrecioTxt(this, auxPrecio) &&
-				   !Passenger_getCodigoVuelo(this, auxCodigoVuelo) && !Passenger_getTipoPasajero(this, auxTipoPasajero) &&
-				   !Passenger_getEstadoVuelo(this, auxEstadoVuelo))
+				if(this != NULL && !Passenger_getIdTxt(this, buffer[0]) && !Passenger_getNombre(this, buffer[1]) &&
+				   !Passenger_getApellido(this, buffer[2]) && !Passenger_getPrecioTxt(this, buffer[3]) &&
+				   !Passenger_getCodigoVuelo(this, buffer[4]) && !Passenger_getTipoPasajero(this, buffer[5]) &&
+				   !Passenger_getEstadoVuelo(this, buffer[6]))
 				{
-					fprintf(pFile, "%s,%s,%s,%s,%s,%s,%s\n", auxId, auxNombre, auxApellido, auxPrecio, auxCodigoVuelo, auxTipoPasajero, auxTipoPasajero);
+					fprintf(pFile, "%s,%s,%s,%s,%s,%s,%s\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6]);
 				}
 
 				else
